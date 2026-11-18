@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Spyo-GENOMiCUS-400 Results Section 3 reproducibility script.
+Spyo-GENOMiCUS-399 Results Section 3 reproducibility script.
 "Phylons are concordant with established classification metrics"
 
 For each phylon, computes ARI, NMI, purity (PPV), sensitivity (recall),
@@ -21,7 +21,7 @@ Treats each phylon as a binary classifier ("in phylon" vs "not"); ground
 truth label is binary in the same way ("has truth label" vs "not"). ARI
 and NMI are computed as 2x2 partition-level metrics over all 399 genomes.
 
-Inputs (in /mnt/user-data/uploads/):
+Inputs (in INPUT_DIR; default "data/", override with argv[1] or $SPYO_DATA):
     A_bin_panta_cdhit_Spyo.csv     binarized A matrix (11 phylons x 399)
     L_bin_panta_cdhit_Spyo.csv     binarized L matrix (1167 genes x 11)
     car_metadata_Sypo.csv          per-genome metadata (399 rows)
@@ -34,14 +34,27 @@ from pathlib import Path
 from sklearn.metrics import (adjusted_rand_score, normalized_mutual_info_score,
                              confusion_matrix)
 
-UPLOADS = Path('/mnt/user-data/uploads')
-OUTPUTS = Path('/mnt/user-data/outputs')
-OUTPUTS.mkdir(parents=True, exist_ok=True)
+import os, sys
 
-A   = pd.read_csv(UPLOADS / 'A_bin_panta_cdhit_Spyo.csv', index_col=0)
-L   = pd.read_csv(UPLOADS / 'L_bin_panta_cdhit_Spyo.csv', index_col=0)
-md  = pd.read_csv(UPLOADS / 'car_metadata_Sypo.csv', low_memory=False)
-ann = pd.read_csv(UPLOADS / 'gene_annot_panta_Spyo.csv', low_memory=False)
+# Input/output directories. Defaults assume the script is run from the repository
+# root with the Zenodo matrices unpacked into data/.
+INPUT_DIR  = Path(sys.argv[1] if len(sys.argv) > 1
+                  else os.environ.get('SPYO_DATA', 'data'))
+OUTPUT_DIR = Path(sys.argv[2] if len(sys.argv) > 2
+                  else os.environ.get('SPYO_RESULTS', 'results'))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+for _f in ('A_bin_panta_cdhit_Spyo.csv', 'L_bin_panta_cdhit_Spyo.csv',
+           'car_metadata_Sypo.csv', 'gene_annot_panta_Spyo.csv'):
+    if not (INPUT_DIR / _f).exists():
+        sys.exit(f'Missing input: {INPUT_DIR / _f}\n'
+                 f'Download the Zenodo deposit first:\n'
+                 f'    python scripts/zenodo_fetch.py 20403112 -o {INPUT_DIR}')
+
+A   = pd.read_csv(INPUT_DIR / 'A_bin_panta_cdhit_Spyo.csv', index_col=0)
+L   = pd.read_csv(INPUT_DIR / 'L_bin_panta_cdhit_Spyo.csv', index_col=0)
+md  = pd.read_csv(INPUT_DIR / 'car_metadata_Sypo.csv', low_memory=False)
+ann = pd.read_csv(INPUT_DIR / 'gene_annot_panta_Spyo.csv', low_memory=False)
 
 md['genome_id'] = md['genome_id'].astype(str)
 md = md.set_index('genome_id').loc[A.columns]   # align with A's 399 columns
@@ -211,7 +224,7 @@ with pd.option_context('display.max_rows', None, 'display.width', 200,
                        'display.max_colwidth', 40):
     print(results_df.to_string(index=False))
 
-results_df.to_csv(OUTPUTS / 'section3_phylon_concordance.csv', index=False)
+results_df.to_csv(OUTPUT_DIR / 'section3_phylon_concordance.csv', index=False)
 
 # ============================================================================
 # Global multi-class concordance (matches manuscript Results text)
@@ -278,9 +291,9 @@ print('  Lineage-specific only:  ARI=0.90/NMI=0.88 (MLST), ARI=0.92/NMI=0.89 (em
 print('  All 9 taxonomic phylons: ARI=0.74/NMI=0.75 (MLST), ARI=0.76/NMI=0.76 (emm)')
 print()
 print(global_df.to_string(index=False))
-global_df.to_csv(OUTPUTS / 'section3_global_concordance.csv', index=False)
+global_df.to_csv(OUTPUT_DIR / 'section3_global_concordance.csv', index=False)
 
 print()
 print('Files written:')
-print('  /mnt/user-data/outputs/section3_phylon_concordance.csv')
-print('  /mnt/user-data/outputs/section3_global_concordance.csv')
+print(f'  {OUTPUT_DIR / "section3_phylon_concordance.csv"}')
+print(f'  {OUTPUT_DIR / "section3_global_concordance.csv"}')

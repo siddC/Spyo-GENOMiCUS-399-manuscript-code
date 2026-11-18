@@ -1,16 +1,47 @@
+#!/usr/bin/env python3
+"""
+Figure S8: accessory-gene intersection structure (UpSet) and the frequency
+distribution of zero-phylon genes.
+
+    python3 make_figure_s8.py \
+        --L       data/L_binarized_panta_cdhit.csv \
+        --acc     data/df_acc_panta_cdhit.pickle \
+        --outdir  results
+
+Writes FigureS8.{pdf,svg,png} plus FigS8a_upset_combinations.csv (Table S12).
+"""
+import argparse, os
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpec
 import pandas as pd, numpy as np, collections
 from scipy.stats import mannwhitneyu
 
-ATT='/mnt/user-data/attachments/9ca94e67-a8a6-56d1-ab73-5c6a6caaa736/'
-L=pd.read_csv(ATT+'74ed263d-L_bin_panta_cdhit_Spyo.csv',index_col=0)
-PH=['emm-patternE-other','ST28-emm1','ST52-emm28','ST39-emm4','emm3/6/5','ST36',
-    'ST63-emm77','SpeK-prophage','emm-patternD-other','SpeC-prophage','ST101-emm89']
-L.columns=PH
-acc=pd.read_pickle('/home/claude/pmat/acc.pkl'); L=L.reindex(acc.index)
+p = argparse.ArgumentParser()
+p.add_argument('--indir',  default=os.environ.get('SPYO_DATA', 'data'),
+               help='directory holding the Zenodo matrices (default: data)')
+p.add_argument('--outdir', default=os.environ.get('SPYO_RESULTS', 'results'))
+p.add_argument('--L',   default=None, help='override path to the binarized L matrix')
+p.add_argument('--acc', default=None, help='override path to the accessory P matrix')
+p.add_argument('--top', type=int, default=30, help='intersections to plot')
+a = p.parse_args()
+a.L   = a.L   or os.path.join(a.indir, 'L_bin_panta_cdhit_Spyo.csv')
+a.acc = a.acc or os.path.join(a.indir, 'df_acc_panta_cdhit.pickle')
+for _f in (a.L, a.acc):
+    if not os.path.exists(_f):
+        raise SystemExit(f'Missing input: {_f}\n'
+                         f'Download the Zenodo deposit first:\n'
+                         f'    python scripts/zenodo_fetch.py 20403112 -o {a.indir}')
+os.makedirs(a.outdir, exist_ok=True)
 
+PH = ['emm-patternE-other','ST28-emm1','ST52-emm28','ST39-emm4','emm3/6/5','ST36',
+      'ST63-emm77','SpeK-prophage','emm-patternD-other','SpeC-prophage','ST101-emm89']
+L = pd.read_csv(a.L, index_col=0)
+if L.shape[0] == 11 and L.shape[1] != 11:
+    L = L.T
+L.columns = PH
+acc = pd.read_pickle(a.acc) if a.acc.endswith(('.pickle', '.pkl')) else pd.read_csv(a.acc, index_col=0)
+L = L.reindex(acc.index)
+TOP = a.top
 BLUE='#1769BF'; RED='#D94A3D'; INK='#27272A'; GRAY='#52525B'; GRID='#D4D4D8'
 plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['DejaVu Sans'],
     'font.size':7,'axes.edgecolor':GRAY,'axes.linewidth':.6,'text.color':INK,
@@ -18,7 +49,6 @@ plt.rcParams.update({'font.family':'sans-serif','font.sans-serif':['DejaVu Sans'
 
 combo=L.apply(lambda r: tuple(sorted(L.columns[r>0])),axis=1)
 cnt={k:v for k,v in collections.Counter(combo).items() if k}
-TOP=30
 top=sorted(cnt.items(),key=lambda x:-x[1])[:TOP]
 setsize=L.sum(axis=0).sort_values(ascending=False)
 rows=list(setsize.index)
@@ -108,7 +138,9 @@ ax2.legend(frameon=False,fontsize=6.8,loc='upper left',handlelength=1.1,ncol=1)
 ax2.set_title('b',loc='left',fontsize=10,fontweight='bold',color=INK,pad=4)
 
 for ext in ('pdf','svg','png'):
-    fig.savefig(f'/mnt/user-data/outputs/FigureS8.{ext}',dpi=400,bbox_inches='tight',
+    fig.savefig(os.path.join(a.outdir, f'FigureS8.{ext}'),dpi=400,bbox_inches='tight',
                 facecolor='white')
+pd.Series({'|'.join(k): v for k, v in cnt.items()}).sort_values(ascending=False)\
+  .to_csv(os.path.join(a.outdir,'FigS8a_upset_combinations.csv'), header=['n_genes'])
 print('saved; top intersections shown:',TOP,'of',len(cnt))
 print('Sda1 3-way =',cnt[SDA],'| zero-phylon =',int(zero.sum()),'| P =',f'{p:.3g}')
