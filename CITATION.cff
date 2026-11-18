@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this software or the associated data, please cite the paper below."
+title: "Spyo-GENOMiCUS-399: pangenomic decomposition of the Streptococcus pyogenes accessory genome"
+abstract: >-
+  Analysis code for non-negative matrix factorization of the Streptococcus pyogenes
+  accessory genome across 399 complete genomes into 11 phylons.
+authors:
+  - family-names: Chauhan
+    given-names: Siddharth M.
+    affiliation: "Department of Bioengineering, University of California San Diego"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"   # <- fill in
+  - family-names: Monk
+    given-names: Jonathan M.
+    affiliation: "Department of Bioengineering, University of California San Diego"
+  - family-names: Palsson
+    given-names: Bernhard O.
+    affiliation: "Department of Bioengineering, University of California San Diego"
+  - family-names: Nizet
+    given-names: Victor
+    affiliation: "Department of Pediatrics, University of California San Diego"
+license: MIT
+repository-code: "https://github.com/siddC/Spyo-GENOMiCUS-399-manuscript-code"
+keywords:
+  - pangenomics
+  - Streptococcus pyogenes
+  - non-negative matrix factorization
+  - prophage
+  - group A Streptococcus
+references:
+  - type: data
+    title: "Data and code pertaining to: Pangenomic decomposition reveals lineage-specific immune-evasion and virulence architectures in group A Streptococcus"
+    authors:
+      - family-names: Chauhan
+        given-names: Siddharth M.
+    doi: "10.5281/zenodo.20403112"
+    year: 2026
