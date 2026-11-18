@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Table 1: Per-phylon virulence and ecological characterization across the
-seven lineage-specific S. pyogenes phylons of Spyo-GENOMiCUS-400.
+seven lineage-specific S. pyogenes phylons of Spyo-GENOMiCUS-399.
 
 METHODOLOGY:
   Isolation sites are classified from the standardized source_cat metadata

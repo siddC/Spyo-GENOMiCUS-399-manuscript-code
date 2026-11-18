@@ -334,7 +334,7 @@ def make_figure(reps, outpath_pdf, outpath_png):
         ax.spines[spine].set_visible(False)
     ax.set_title(
         "Synteny of the canonical Sda1-encoding prophage across the "
-        "three Sda1+ phylons of Spyo-GENOMiCUS-400",
+        "three Sda1+ phylons of Spyo-GENOMiCUS-399",
         fontsize=11, pad=12,
     )
 

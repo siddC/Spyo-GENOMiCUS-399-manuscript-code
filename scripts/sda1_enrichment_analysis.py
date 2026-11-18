@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sda1 prophage enrichment analysis for Spyo-GENOMiCUS-400.
+Sda1 prophage enrichment analysis for Spyo-GENOMiCUS-399.
 
 Identifies the 27-gene Sda1 prophage core shared by all three Sda1+
 phylons (ST28-emm1, ST36, ST63-emm77) and absent from all other phylons
