@@ -1,0 +1,15 @@
+{
+  "title": "Spyo-GENOMiCUS-399: analysis code for pangenomic decomposition of the Streptococcus pyogenes accessory genome",
+  "license": "MIT",
+  "upload_type": "software",
+  "creators": [
+    {"name": "Chauhan, Siddharth M.", "affiliation": "University of California San Diego"},
+    {"name": "Monk, Jonathan M.", "affiliation": "University of California San Diego"},
+    {"name": "Palsson, Bernhard O.", "affiliation": "University of California San Diego"},
+    {"name": "Nizet, Victor", "affiliation": "University of California San Diego"}
+  ],
+  "related_identifiers": [
+    {"identifier": "10.5281/zenodo.20403112", "relation": "isSupplementTo", "scheme": "doi"}
+  ],
+  "keywords": ["pangenomics", "Streptococcus pyogenes", "NMF", "prophage", "group A Streptococcus"]
+}

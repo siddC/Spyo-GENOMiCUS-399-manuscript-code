@@ -1,0 +1,19 @@
+# Data downloaded from Zenodo (tracked by DOI, not by git)
+data/*.csv
+data/*.pickle
+data/*.xlsx
+!data/accessions.tsv
+
+# Large intermediates
+bakta/
+poppunk-outputs/
+*.h5
+*.npy
+*.dists.pkl
+
+# Notebook cruft
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+.DS_Store
+.env
