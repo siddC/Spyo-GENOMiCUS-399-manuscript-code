@@ -37,12 +37,22 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyArrow, Rectangle
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-OUTPUT_DIR = Path(".")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/fig_speC_mf2_synteny.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/fig_speC_mf2_synteny.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 COLORS = {
     "Phage structural":      "#7f8c8d",   # grey-brown
@@ -58,7 +68,7 @@ REPS = [
     {
         "label":         "1314.985\nST52-emm28\nspeC + mf2",
         "genome_id":     "1314.985",
-        "gff":           "1314_985.gff3",
+        "gff":           INPUT_DIR / "1314_985.gff3",
         "speC_lt":       "GGAFNI_00883",
         "mf2_lt":        "GGAFNI_00884",
         "reverse_comp":  False,
@@ -66,7 +76,7 @@ REPS = [
     {
         "label":         "1314.3072\nST39-emm4\nspeC_01049\n+ mf2_01051",
         "genome_id":     "1314.3072",
-        "gff":           "1314_3072.gff3",
+        "gff":           INPUT_DIR / "1314_3072.gff3",
         "speC_lt":       "FEFGFE_00607",
         "mf2_lt":        "FEFGFE_00608",
         "reverse_comp":  False,
@@ -74,7 +84,7 @@ REPS = [
     {
         "label":         "GCF_041430965.1\nemm-patternE-other\nspeC_01050\n+ mf2_01052",
         "genome_id":     "GCF_041430965.1",
-        "gff":           "GCF_041430965_1.gff3",
+        "gff":           INPUT_DIR / "GCF_041430965_1.gff3",
         "speC_lt":       "LABOOI_01147",
         "mf2_lt":        "LABOOI_01146",
         "reverse_comp":  True,

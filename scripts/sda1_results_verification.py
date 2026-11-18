@@ -19,6 +19,8 @@ Input files (expected in working directory or adjust paths):
 Author: Siddharth M. Chauhan
 """
 
+import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 from scipy.stats import fisher_exact
@@ -27,12 +29,23 @@ from statsmodels.stats.multitest import multipletests
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-A_PATH     = "A_bin_panta_cdhit_Spyo.csv"
-L_PATH     = "L_bin_panta_cdhit_Spyo.csv"
-P_PATH     = "df_genes_panta_cdhit_final.pickle"
-META_PATH  = "car_metadata_Sypo.csv"
-ANNOT_PATH = "gene_annot_panta_Spyo.csv"
-BLAST_PATH = "sda1_hits.tsv"
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/sda1_results_verification.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/sda1_results_verification.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+A_PATH     = INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv"
+L_PATH     = INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv"
+P_PATH     = INPUT_DIR / "df_genes_panta_cdhit_final.pickle"
+META_PATH  = INPUT_DIR / "car_metadata_Sypo.csv"
+ANNOT_PATH = INPUT_DIR / "gene_annot_panta_Spyo.csv"
+BLAST_PATH = INPUT_DIR / "sda1_hits.tsv"
 
 SDA1_PHYLONS = ["ST28-emm1", "ST36", "ST63-emm77"]
 QUERY_LEN = 390   # Sda1/SdaD2 protein length (UniProt Q675N6)

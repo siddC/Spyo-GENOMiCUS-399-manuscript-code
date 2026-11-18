@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Table 1: Per-phylon virulence and ecological characterization across the
-seven lineage-specific S. pyogenes phylons of Spyo-GENOMiCUS-400.
+seven lineage-specific S. pyogenes phylons of Spyo-GENOMiCUS-399.
 
 METHODOLOGY:
   Isolation sites are classified from the standardized source_cat metadata
@@ -43,18 +43,28 @@ Author: Siddharth M. Chauhan
 
 import pandas as pd
 import numpy as np
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-OUTPUT_DIR = Path(".")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/table1_analysis.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/table1_analysis.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-L_PATH     = "L_bin_panta_cdhit_Spyo.csv"
-A_PATH     = "A_bin_panta_cdhit_Spyo.csv"
-P_PATH     = "df_genes_panta_cdhit_final.pickle"
-META_PATH  = "car_metadata_Sypo.csv"
-ANNOT_PATH = "gene_annot_panta_Spyo.csv"
+L_PATH     = INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv"
+A_PATH     = INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv"
+P_PATH     = INPUT_DIR / "df_genes_panta_cdhit_final.pickle"
+META_PATH  = INPUT_DIR / "car_metadata_Sypo.csv"
+ANNOT_PATH = INPUT_DIR / "gene_annot_panta_Spyo.csv"
 
 LINEAGE_PHYLONS = [
     "ST28-emm1", "ST36", "ST63-emm77", "ST52-emm28",

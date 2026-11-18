@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sda1 prophage enrichment analysis for Spyo-GENOMiCUS-400.
+Sda1 prophage enrichment analysis for Spyo-GENOMiCUS-399.
 
 Identifies the 27-gene Sda1 prophage core shared by all three Sda1+
 phylons (ST28-emm1, ST36, ST63-emm77) and absent from all other phylons
@@ -26,13 +26,22 @@ import pandas as pd
 import numpy as np
 from scipy.stats import fisher_exact
 from statsmodels.stats.multitest import multipletests
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-INPUT_DIR = Path(".")       # Adjust if input files are elsewhere
-OUTPUT_DIR = Path(".")      # Adjust for output location
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/sda1_enrichment_analysis.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/sda1_enrichment_analysis.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 L_PATH     = INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv"
 A_PATH     = INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv"

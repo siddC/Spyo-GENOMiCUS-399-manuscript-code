@@ -37,6 +37,7 @@ Author: Siddharth M. Chauhan
 import re
 import subprocess
 import tempfile
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -51,8 +52,17 @@ from Bio.Seq import Seq
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-GFF_PATH   = Path("1314_4589.gff3")
-OUTPUT_DIR = Path(".")
+GFF_PATH   = Path(INPUT_DIR / "1314_4589.gff3")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/nested_sda1_prophage_analysis.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/nested_sda1_prophage_analysis.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Genomic window for the synteny figure (bp on contig_1)
 WINDOW_LO = 1394000
