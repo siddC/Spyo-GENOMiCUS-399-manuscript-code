@@ -3,6 +3,7 @@ data/*.csv
 data/*.pickle
 data/*.xlsx
 !data/accessions.tsv
+!data/car_metadata_Sypo.csv
 !data/car_metadata_Spyo.csv
 
 # Large intermediates
