@@ -22,19 +22,29 @@ Author: Siddharth M. Chauhan
 
 import re
 import pandas as pd
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-OUTPUT_DIR = Path(".")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/speC_mf2_synteny_table.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/speC_mf2_synteny_table.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 REPS = [
     {
         "genome_id":     "1314.985",
         "phylon":        "ST52-emm28",
         "paralog_pair":  "speC + mf2",
-        "gff":           "1314_985.gff3",
+        "gff":           INPUT_DIR / "1314_985.gff3",
         "speC_lt":       "GGAFNI_00883",
         "mf2_lt":        "GGAFNI_00884",
         "reverse_comp":  False,
@@ -43,7 +53,7 @@ REPS = [
         "genome_id":     "1314.3072",
         "phylon":        "ST39-emm4",
         "paralog_pair":  "speC_01049 + mf2_01051",
-        "gff":           "1314_3072.gff3",
+        "gff":           INPUT_DIR / "1314_3072.gff3",
         "speC_lt":       "FEFGFE_00607",
         "mf2_lt":        "FEFGFE_00608",
         "reverse_comp":  False,
@@ -52,7 +62,7 @@ REPS = [
         "genome_id":     "GCF_041430965.1",
         "phylon":        "emm-patternE-other",
         "paralog_pair":  "speC_01050 + mf2_01052",
-        "gff":           "GCF_041430965_1.gff3",
+        "gff":           INPUT_DIR / "GCF_041430965_1.gff3",
         "speC_lt":       "LABOOI_01147",
         "mf2_lt":        "LABOOI_01146",
         "reverse_comp":  True,

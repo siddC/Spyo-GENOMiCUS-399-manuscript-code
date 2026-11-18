@@ -32,12 +32,22 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyArrow
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-OUTPUT_DIR = Path(".")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/fig_sda1_prophage_synteny.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/fig_sda1_prophage_synteny.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Module assignment for the 27 Sda1+ shared-exclusive genes
 MODULE = {
@@ -98,7 +108,7 @@ LABEL = {
 REPS = [
     {
         "label":    "ST28-emm1\n(GCF_051530335.1)",
-        "gff_path": "GCF_051530335_1.gff3",
+        "gff_path": INPUT_DIR / "GCF_051530335_1.gff3",
         "mapping": {
             "sda1": "JAOCMF_01460", "irrE_00560": "JAOCMF_01511",
             "groups_89": "JAOCMF_01461", "groups_107": "JAOCMF_01465",
@@ -118,7 +128,7 @@ REPS = [
     },
     {
         "label":    "ST36\n(GCF_041429935.1)",
-        "gff_path": "GCF_041429935_1.gff3",
+        "gff_path": INPUT_DIR / "GCF_041429935_1.gff3",
         "mapping": {
             "sda1": "ELMNOM_01350", "irrE_00560": "ELMNOM_01401",
             "groups_89": "ELMNOM_01351", "groups_107": "ELMNOM_01355",
@@ -138,7 +148,7 @@ REPS = [
     },
     {
         "label":    "ST63-emm77\n(GCF_041074825.1)",
-        "gff_path": "GCF_041074825_1.gff3",
+        "gff_path": INPUT_DIR / "GCF_041074825_1.gff3",
         "mapping": {
             "sda1": "GPDFCO_01541", "irrE_00560": "GPDFCO_01592",
             "groups_89": "GPDFCO_01542", "groups_107": "GPDFCO_01546",

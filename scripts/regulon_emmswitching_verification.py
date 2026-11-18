@@ -23,14 +23,24 @@ Author: Siddharth M. Chauhan
 import pandas as pd
 import numpy as np
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
+import os
 from pathlib import Path
 
-OUTPUT_DIR = Path(".")
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/regulon_emmswitching_verification.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/regulon_emmswitching_verification.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-L = pd.read_csv("L_bin_panta_cdhit_Spyo.csv", index_col=0)
-A = pd.read_csv("A_bin_panta_cdhit_Spyo.csv", index_col=0)
-meta = pd.read_csv("car_metadata_Sypo.csv", low_memory=False)
-gene_annot = pd.read_csv("gene_annot_panta_Spyo.csv", low_memory=False)
+L = pd.read_csv(INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv", index_col=0)
+A = pd.read_csv(INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv", index_col=0)
+meta = pd.read_csv(INPUT_DIR / "car_metadata_Sypo.csv", low_memory=False)
+gene_annot = pd.read_csv(INPUT_DIR / "gene_annot_panta_Spyo.csv", low_memory=False)
 annot_map = dict(zip(gene_annot["Gene"], gene_annot["Annotation"]))
 
 TAX_PHYLONS = [p for p in A.index if p not in ["SpeK-prophage", "SpeC-prophage"]]

@@ -28,13 +28,23 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyArrow
+import os
 from pathlib import Path
 
 # ══════════════════════════════════════════════════════════════════════════════
 # CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-GFF_PATH   = "1314_4589.gff3"
-OUTPUT_DIR = Path(".")
+GFF_PATH   = INPUT_DIR / "1314_4589.gff3"
+# ---------------------------------------------------------------------------
+# Input/output directories.  Defaults assume this script is run from the
+# repository root with the Zenodo matrices unpacked into data/:
+#     python scripts/figS_double_sda1_prophage.py
+# Override either with an environment variable:
+#     SPYO_DATA=/path/to/data SPYO_RESULTS=/path/to/out python scripts/figS_double_sda1_prophage.py
+# ---------------------------------------------------------------------------
+INPUT_DIR  = Path(os.environ.get("SPYO_DATA", "data"))
+OUTPUT_DIR = Path(os.environ.get("SPYO_RESULTS", "results"))
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # Genomic window to display (bp coordinates on contig_1)
 WINDOW_LO = 1394000
