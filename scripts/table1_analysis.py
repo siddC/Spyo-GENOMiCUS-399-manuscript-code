@@ -32,7 +32,7 @@ Input files (expected in working directory):
     - L_bin_panta_cdhit_Spyo.csv
     - A_bin_panta_cdhit_Spyo.csv
     - df_genes_panta_cdhit_final.pickle
-    - car_metadata_Sypo.csv
+    - car_metadata_Spyo.csv
     - gene_annot_panta_Spyo.csv
 
 Output:
@@ -63,7 +63,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 L_PATH     = INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv"
 A_PATH     = INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv"
 P_PATH     = INPUT_DIR / "df_genes_panta_cdhit_final.pickle"
-META_PATH  = INPUT_DIR / "car_metadata_Sypo.csv"
+META_PATH  = INPUT_DIR / "car_metadata_Spyo.csv"
 ANNOT_PATH = INPUT_DIR / "gene_annot_panta_Spyo.csv"
 
 LINEAGE_PHYLONS = [

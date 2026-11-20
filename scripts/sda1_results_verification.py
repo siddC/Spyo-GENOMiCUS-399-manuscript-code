@@ -12,7 +12,7 @@ Input files (expected in working directory or adjust paths):
     - A_bin_panta_cdhit_Spyo.csv
     - L_bin_panta_cdhit_Spyo.csv
     - df_genes_panta_cdhit_final.pickle
-    - car_metadata_Sypo.csv
+    - car_metadata_Spyo.csv
     - gene_annot_panta_Spyo.csv
     - sda1_hits.tsv  (tBLASTn outfmt 6, query = Q675N6, db = 399 genomes)
 
@@ -43,7 +43,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 A_PATH     = INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv"
 L_PATH     = INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv"
 P_PATH     = INPUT_DIR / "df_genes_panta_cdhit_final.pickle"
-META_PATH  = INPUT_DIR / "car_metadata_Sypo.csv"
+META_PATH  = INPUT_DIR / "car_metadata_Spyo.csv"
 ANNOT_PATH = INPUT_DIR / "gene_annot_panta_Spyo.csv"
 BLAST_PATH = INPUT_DIR / "sda1_hits.tsv"
 

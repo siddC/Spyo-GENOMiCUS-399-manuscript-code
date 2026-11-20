@@ -14,7 +14,7 @@ Recomputes:
 Input files:
     - L_bin_panta_cdhit_Spyo.csv
     - A_bin_panta_cdhit_Spyo.csv
-    - car_metadata_Sypo.csv
+    - car_metadata_Spyo.csv
     - gene_annot_panta_Spyo.csv
 
 Author: Siddharth M. Chauhan
@@ -39,7 +39,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 L = pd.read_csv(INPUT_DIR / "L_bin_panta_cdhit_Spyo.csv", index_col=0)
 A = pd.read_csv(INPUT_DIR / "A_bin_panta_cdhit_Spyo.csv", index_col=0)
-meta = pd.read_csv(INPUT_DIR / "car_metadata_Sypo.csv", low_memory=False)
+meta = pd.read_csv(INPUT_DIR / "car_metadata_Spyo.csv", low_memory=False)
 gene_annot = pd.read_csv(INPUT_DIR / "gene_annot_panta_Spyo.csv", low_memory=False)
 annot_map = dict(zip(gene_annot["Gene"], gene_annot["Annotation"]))
 

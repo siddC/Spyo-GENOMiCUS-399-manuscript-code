@@ -24,7 +24,7 @@ and NMI are computed as 2x2 partition-level metrics over all 399 genomes.
 Inputs (in INPUT_DIR; default "data/", override with argv[1] or $SPYO_DATA):
     A_bin_panta_cdhit_Spyo.csv     binarized A matrix (11 phylons x 399)
     L_bin_panta_cdhit_Spyo.csv     binarized L matrix (1167 genes x 11)
-    car_metadata_Sypo.csv          per-genome metadata (399 rows)
+    car_metadata_Spyo.csv          per-genome metadata (399 rows)
     gene_annot_panta_Spyo.csv      PanTA gene annotations
 """
 
@@ -45,7 +45,7 @@ OUTPUT_DIR = Path(sys.argv[2] if len(sys.argv) > 2
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 for _f in ('A_bin_panta_cdhit_Spyo.csv', 'L_bin_panta_cdhit_Spyo.csv',
-           'car_metadata_Sypo.csv', 'gene_annot_panta_Spyo.csv'):
+           'car_metadata_Spyo.csv', 'gene_annot_panta_Spyo.csv'):
     if not (INPUT_DIR / _f).exists():
         sys.exit(f'Missing input: {INPUT_DIR / _f}\n'
                  f'Download the Zenodo deposit first:\n'
@@ -53,7 +53,7 @@ for _f in ('A_bin_panta_cdhit_Spyo.csv', 'L_bin_panta_cdhit_Spyo.csv',
 
 A   = pd.read_csv(INPUT_DIR / 'A_bin_panta_cdhit_Spyo.csv', index_col=0)
 L   = pd.read_csv(INPUT_DIR / 'L_bin_panta_cdhit_Spyo.csv', index_col=0)
-md  = pd.read_csv(INPUT_DIR / 'car_metadata_Sypo.csv', low_memory=False)
+md  = pd.read_csv(INPUT_DIR / 'car_metadata_Spyo.csv', low_memory=False)
 ann = pd.read_csv(INPUT_DIR / 'gene_annot_panta_Spyo.csv', low_memory=False)
 
 md['genome_id'] = md['genome_id'].astype(str)

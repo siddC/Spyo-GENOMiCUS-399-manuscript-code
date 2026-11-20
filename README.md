@@ -15,7 +15,7 @@ workflow to another species, please open an issue.
 
 Genome assemblies are public and are **not** redistributed here. `data/accessions.tsv` lists
 all 399 genomes with their BV-BRC identifiers and NCBI assembly, BioProject and BioSample
-accessions; `data/car_metadata_Sypo.csv` is the full curated metadata table used throughout.
+accessions; `data/car_metadata_Spyo.csv` is the full curated metadata table used throughout.
 
 Derived data — the pangenome matrix **P**, the core/accessory/rare partitions, the **L** and
 **A** matrices, and Supplementary Tables S1–S12 — are archived on Zenodo:
