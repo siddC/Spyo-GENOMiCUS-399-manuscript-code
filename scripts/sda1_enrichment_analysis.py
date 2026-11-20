@@ -292,7 +292,7 @@ def main():
     print_summary(df, n_sda1, n_non)
 
     # ── Save ──
-    out_path = OUTPUT_DIR / "Table_S5_Sda1_enrichment.csv"
+    out_path = OUTPUT_DIR / "TableS7_Sda1_prophage_core_enrichment.csv"
     df.to_csv(out_path, index=False)
     print(f"\nTable saved to: {out_path}")
     print(f"Shape: {df.shape}")

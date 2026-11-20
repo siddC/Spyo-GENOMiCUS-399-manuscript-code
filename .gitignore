@@ -3,8 +3,9 @@ data/*.csv
 data/*.pickle
 data/*.xlsx
 !data/accessions.tsv
-!data/car_metadata_Sypo.csv
 !data/car_metadata_Spyo.csv
+!data/GAS_assigned_clusters.csv
+!data/GAS_refined_clusters.csv
 
 # Large intermediates
 bakta/
