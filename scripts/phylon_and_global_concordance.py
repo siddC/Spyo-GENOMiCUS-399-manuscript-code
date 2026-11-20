@@ -224,7 +224,7 @@ with pd.option_context('display.max_rows', None, 'display.width', 200,
                        'display.max_colwidth', 40):
     print(results_df.to_string(index=False))
 
-results_df.to_csv(OUTPUT_DIR / 'section3_phylon_concordance.csv', index=False)
+results_df.to_csv(OUTPUT_DIR / 'TableS5_per_phylon_concordance.csv', index=False)
 
 # ============================================================================
 # Global multi-class concordance (matches manuscript Results text)
@@ -291,9 +291,9 @@ print('  Lineage-specific only:  ARI=0.90/NMI=0.88 (MLST), ARI=0.92/NMI=0.89 (em
 print('  All 9 taxonomic phylons: ARI=0.74/NMI=0.75 (MLST), ARI=0.76/NMI=0.76 (emm)')
 print()
 print(global_df.to_string(index=False))
-global_df.to_csv(OUTPUT_DIR / 'section3_global_concordance.csv', index=False)
+global_df.to_csv(OUTPUT_DIR / 'TableS6_global_concordance.csv', index=False)
 
 print()
 print('Files written:')
-print(f'  {OUTPUT_DIR / "section3_phylon_concordance.csv"}')
-print(f'  {OUTPUT_DIR / "section3_global_concordance.csv"}')
+print(f'  {OUTPUT_DIR / "TableS5_per_phylon_concordance.csv"}')
+print(f'  {OUTPUT_DIR / "TableS6_global_concordance.csv"}')
